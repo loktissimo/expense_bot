@@ -1,1 +1,3 @@
-# expense_bot
+# Аccounting of expenses automation
+Flask
+Telegramm
