@@ -1,4 +1,4 @@
-# Аccounting of expenses automation
+# Аccounting of expenses
 Flask
 
 Telegramm
