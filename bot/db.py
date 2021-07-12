@@ -33,12 +33,12 @@ class DBConnection:
         self.cnx.close()
 
 
-add_user = "INSERT IGNORE INTO users (telegram_id, name) VALUES (%s, %s)"
-
-
-def write_db(query_name, data):
+def query_db(query_name, data):
     try:
         with DBConnection() as connection:
             connection.cur.execute(query_name, data)
+            result = connection.cur.fetchall()
+            print(result)
+            return result
     except Error as e:
         print(e)

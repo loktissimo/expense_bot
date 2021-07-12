@@ -1,3 +1,0 @@
-[mysqld]
-log_error = /var/log/mysql/mysql.err
-log_warnings = 1
