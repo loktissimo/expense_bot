@@ -3,3 +3,4 @@
 .vscode
 *.env
 *.secret
+*.code-workspace
