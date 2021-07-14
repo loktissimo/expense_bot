@@ -1,21 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="/static/bootstrap.css" rel="stylesheet">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Favicon-->
-    <link rel="icon" type="image/svg" href="/static/cash-machine.svg" />
-    <title>Accounting</title>
-  </head>
-  
-  <body>
-    {% block body %} 
+  <!-- Bootstrap CSS -->
+  <link href="/static/bootstrap.css" rel="stylesheet">
 
-    {% endblock %}
-  </body>
+  <!-- Favicon-->
+  <link rel="icon" type="image/svg" href="/static/cash-machine.svg" />
+  <title>Accounting</title>
+</head>
+
+<body style="
+background: rgb(82,82,82);
+background: linear-gradient(355deg, rgb(66, 78, 62) 0%, rgb(194, 241, 226) 100%);
+">
+  {% block body %}
+
+  {% endblock %}
+</body>
+
 </html>

@@ -5,7 +5,7 @@ from db import query_db
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv('../.env')
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -78,4 +78,5 @@ def get_all(message):
         bot.send_message(id, message_start_text, parse_mode="MarkdownV2")
 
 
+print('Listening...')
 bot.polling()

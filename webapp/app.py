@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flaskext.mysql import MySQL
 from dotenv import load_dotenv
 import os
+import util
 
 load_dotenv('../.env')
 app = Flask(__name__)
@@ -45,6 +46,11 @@ def update(id):
             SET accepted = 0, accept_date=now()
             WHERE id = %s
         """, (id, ))
-        # flash('Updated Successfully')
         conn.commit()
+
+        cur.execute(f"SELECT telegram_id, text FROM expense WHERE id = {id}")
+        id, text = cur.fetchone()
+        util.send_telegramm_message(id, f'{text} \nвнёс в журнал.')
+
+        flash('Updated Successfully')
         return redirect(url_for('index'))

@@ -7,5 +7,21 @@
 			"path": "webapp"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"sqltools.connections": [
+			{
+				"mysqlOptions": {
+					"authProtocol": "default"
+				},
+				"previewLimit": 50,
+				"server": "192.168.10.110",
+				"port": 3306,
+				"driver": "MariaDB",
+				"name": "raspberry_DB",
+				"database": "expense_bot",
+				"username": "root",
+				"password": "iddqd"
+			}
+		]
+	},
 }
