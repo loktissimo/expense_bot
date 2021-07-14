@@ -1,4 +1,2 @@
 # Аccounting of expenses
-Flask
-
-Telegramm
+Beta version
