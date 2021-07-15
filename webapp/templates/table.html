@@ -54,16 +54,16 @@
                         <tbody>
                         {% for exp in expense %}
                         <tr>
-                            <td>{{ exp.0 }}</td>
-                            <td>{{ exp.1 }}</td>
-                            <td>{{ exp.2 }}</td>
-                            <td>{{ exp.3 }}</td>
-                            <td>{{ exp.4 }}</td>
+                            <td>{{ exp[0] }}</td>
+                            <td>{{ exp[1] }}</td>
+                            <td>{{ exp[2] }}</td>
+                            <td>{{ exp[3] }}</td>
+                            <td>{{ exp[4] }}</td>
                             <td>
                             {% if exp.4 %}
-                                <a href="/update/{{ exp.0 }}" class="btn btn-secondary disabled">Done</a>
+                                <a href="/update/{{ exp[0] }}" class="btn btn-secondary disabled">Done</a>
                             {% else %}
-                                <a href="/update/{{ exp.0 }}" class="btn btn-success">Approve</a>           
+                                <a href="/update/{{ exp[0] }}" class="btn btn-success">Approve</a>           
                             {% endif %}
 
                             <td></td>
