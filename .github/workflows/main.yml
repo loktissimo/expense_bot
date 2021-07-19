@@ -32,4 +32,6 @@ jobs:
           file: ./bot/Dockerfile
           push: true
           platforms: linux/amd64,linux/arm
-          tags: loktissimo/expense_bot:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
