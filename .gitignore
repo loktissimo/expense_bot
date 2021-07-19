@@ -1,10 +1,12 @@
 /env
-/bot/env
+/*/env
+./*/__pycache__
 *.env
 *.secret
 
 # VScode
 .vscode/*
+./*/.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
