@@ -1,4 +1,4 @@
-/env
+env
 /*/env
 */__pycache__
 */__pycache__/*
@@ -7,6 +7,7 @@ bot/__pycache__/*
 *.secret
 
 # VScode
+.vscode
 .vscode/*
 */.vscode/*
 !.vscode/settings.json
