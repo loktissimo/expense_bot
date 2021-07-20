@@ -4,9 +4,11 @@ from telebot.types import ReplyKeyboardRemove
 from db import query_db
 from dotenv import load_dotenv
 import os
+import time
 
 load_dotenv('../.env')
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
+LOG_ID = os.environ.get("LOG_ID")
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # Texts
@@ -79,4 +81,11 @@ def get_all(message):
 
 
 print('Listening...')
-bot.polling()
+while True:
+    try:
+        bot.infinity_polling(True)
+
+    except Exception as e:
+        print(e)
+        bot.send_message(LOG_ID, e)
+        time.sleep(15)
