@@ -24,12 +24,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and push bot
         uses: docker/build-push-action@v2
         with:
           context: ./bot/
           file: ./bot/Dockerfile
           platforms: linux/amd64,linux/arm
           tags: loktissimo/expense_bot:latest
+          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+
+      - name: Build and push webapp
+        uses: docker/build-push-action@v2
+        with:
+          context: ./webapp/
+          file: ./webapp/Dockerfile
+          platforms: linux/amd64,linux/arm
+          tags: loktissimo/expense_web:latest
           labels: ${{ steps.meta.outputs.labels }}
           push: true
