@@ -5,8 +5,10 @@ from dotenv import load_dotenv
 import os
 import util
 
-load_dotenv('../.env')
 app = Flask(__name__)
+
+# Load environment variables
+load_dotenv('../.env')
 
 # Settings
 app.config['SECRET_KEY'] = 'secret-key-akjsdggffkjasdgfh'
@@ -57,7 +59,7 @@ def update(id):
 
         cur.execute(f"SELECT telegram_id, text FROM expense WHERE id = {id}")
         id, text = cur.fetchone()
-        util.send_telegramm_message(id, f'{text} \nвнёс в журнал.')
+        util.send_telegramm_message(id, f'{text} \n- внёс в журнал.')
 
-        flash('Updated Successfully')
+        # flash('Updated Successfully')
         return redirect(url_for('index'))

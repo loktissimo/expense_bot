@@ -27,7 +27,6 @@ class DBConnection:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         # close db connection
-        # print(self.cur)
         self.cnx.commit()
         self.cur.close()
         self.cnx.close()
@@ -38,7 +37,7 @@ def query_db(query_name, data):
         with DBConnection() as connection:
             connection.cur.execute(query_name, data)
             result = connection.cur.fetchall()
-            # print(result)
             return result
     except Error as e:
         print(e)
+        return None
