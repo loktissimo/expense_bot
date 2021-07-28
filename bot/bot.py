@@ -18,14 +18,14 @@ message_done_text = "Готово! Можешь записывать траты.
 message_insert_text = "Записал!"
 message_phone_text = "Передай свой номер телефона, нажми кнопку внизу."
 message_help_text = "Траты можно записывать так:\nВода 100, еда 500\nили в похожем формате на твоё усмотрение."
-
+message_allexp_text = "Все твои траты:"
 
 # SQL queries
 add_user = "INSERT INTO users (telegram_id, name) VALUES (%s, %s)"
 add_phone = "UPDATE users SET tel = %s WHERE telegram_id = %s"
 check_user_exist = "SELECT * FROM users WHERE telegram_id = %s"
 add_expense = "INSERT INTO expense (telegram_id, text, write_date) VALUES (%s, %s, now())"
-get_all_exp = "SELECT * FROM expense WHERE telegram_id = %s"
+get_all_exp = "SELECT text FROM expense WHERE telegram_id = %s"
 
 
 @bot.message_handler(commands=["start"])
@@ -65,7 +65,8 @@ def get_all(message):
     name = query_db(check_user_exist, (id,))
     data = query_db(get_all_exp, (id,))
     if name:
-        bot.send_message(id, data)
+        bot.send_message(id, message_allexp_text)
+        bot.send_message(id, "\n".join((str(x).strip("(',)") for x in data)))
     else:
         bot.send_message(id, message_get_name, parse_mode="MarkdownV2")
 
