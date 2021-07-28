@@ -12,17 +12,20 @@ LOG_ID = os.environ.get("LOG_ID")
 bot = telebot.TeleBot(BOT_TOKEN)
 
 # Texts
-message_start_text = "Привет\\!\nДля начала представься, напиши:``` /name Иванов Иван``` "
+message_get_name = "Привет\\!\nДля начала представься, напиши:``` /name Иванов Иван``` "
 message_ok_text = "Записывай свои траты. Уже можно."
 message_done_text = "Готово! Можешь записывать траты."
 message_insert_text = "Записал!"
-message_phone_text = "Передай номер, пожалуйста."
+message_phone_text = "Передай свой номер телефона, нажми кнопку внизу."
+message_help_text = "Траты можно записывать так:\nВода 100, еда 500\nили в похожем формате на твоё усмотрение."
+
 
 # SQL queries
 add_user = "INSERT INTO users (telegram_id, name) VALUES (%s, %s)"
 add_phone = "UPDATE users SET tel = %s WHERE telegram_id = %s"
 check_user_exist = "SELECT * FROM users WHERE telegram_id = %s"
 add_expense = "INSERT INTO expense (telegram_id, text, write_date) VALUES (%s, %s, now())"
+get_all_exp = "SELECT * FROM expense WHERE telegram_id = %s"
 
 
 @bot.message_handler(commands=["start"])
@@ -32,7 +35,7 @@ def send_welcome(message):
     if name:
         bot.send_message(id, message_ok_text)
     else:
-        bot.send_message(id, message_start_text, parse_mode="MarkdownV2")
+        bot.send_message(id, message_get_name, parse_mode="MarkdownV2")
 
 
 @bot.message_handler(commands=["name"])
@@ -44,7 +47,7 @@ def get_name(message):
     if name:
         bot.send_message(id, message_ok_text)
     elif not text:
-        bot.send_message(id, message_start_text, parse_mode="MarkdownV2")
+        bot.send_message(id, message_get_name, parse_mode="MarkdownV2")
     else:
         query_db(add_user, (id, text))
 
@@ -54,6 +57,27 @@ def get_name(message):
         markup.add(reg_button)
         bot.send_message(
             message.chat.id, message_phone_text, reply_markup=markup)
+
+
+@bot.message_handler(commands=["get_all"])
+def get_all(message):
+    id = message.chat.id
+    name = query_db(check_user_exist, (id,))
+    data = query_db(get_all_exp, (id,))
+    if name:
+        bot.send_message(id, data)
+    else:
+        bot.send_message(id, message_get_name, parse_mode="MarkdownV2")
+
+
+@bot.message_handler(commands=["help"])
+def help(message):
+    id = message.chat.id
+    name = query_db(check_user_exist, (id,))
+    if name:
+        bot.send_message(id, message_help_text)
+    else:
+        bot.send_message(id, message_get_name, parse_mode="MarkdownV2")
 
 
 @bot.message_handler(content_types=["contact"])
@@ -66,7 +90,7 @@ def contact_handler(message):
 
 
 @bot.message_handler(func=lambda message: True)
-def get_all(message):
+def all_messages(message):
     id = message.chat.id
     text = message.text
     name = query_db(check_user_exist, (id,))
@@ -77,7 +101,7 @@ def get_all(message):
         except Error as e:
             bot.reply_to(message, e)
     else:
-        bot.send_message(id, message_start_text, parse_mode="MarkdownV2")
+        bot.send_message(id, message_get_name, parse_mode="MarkdownV2")
 
 
 print('Listening...')
