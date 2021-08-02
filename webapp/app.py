@@ -32,12 +32,11 @@ basic_auth = BasicAuth(app)
 def index():
     conn = mysql.connect()
     cur = conn.cursor()
-    cur.execute("SELECT e.id, u.name, e.text, e.write_date, e.accept_date, e.accepted \
-                 FROM users u INNER \
-                 JOIN expense e \
-                 ON u.telegram_id = e.telegram_id \
-                 ORDER BY e.write_date DESC \
-                ")
+    cur.execute(""" SELECT e.id, u.name, e.text, e.write_date, e.accept_date, e.accepted
+                    FROM users u
+                    INNER JOIN expense e
+                    ON u.telegram_id = e.telegram_id
+                    ORDER BY e.write_date DESC """)
     exp = cur.fetchall()
     cur.execute("SELECT * from users")
     usr = cur.fetchall()
@@ -50,16 +49,14 @@ def update(id):
     if request.method == 'GET':
         conn = mysql.connect()
         cur = conn.cursor()
-        cur.execute("""
-            UPDATE expense
-            SET accepted = 0, accept_date=now()
-            WHERE id = %s
-        """, (id, ))
+        cur.execute(f""" UPDATE expense
+                        SET accepted = 0, accept_date=now()
+                        WHERE id = {id} """)
         conn.commit()
 
         cur.execute(f"SELECT telegram_id, text FROM expense WHERE id = {id}")
         id, text = cur.fetchone()
-        util.send_telegramm_message(id, f'{text} \n- внёс в журнал.')
+        util.send_telegramm_message(id, f'{text}: \nВнёс в журнал.')
 
         flash('Updated Successfully')
         return redirect(url_for('index'))
