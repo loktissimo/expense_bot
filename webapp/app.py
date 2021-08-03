@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request, flash
+from flask.json import jsonify
 from flaskext.mysql import MySQL
 from flask_basicauth import BasicAuth
 from dotenv import load_dotenv
@@ -59,4 +60,22 @@ def update(id):
         util.send_telegramm_message(id, f'{text}: \nВнёс в журнал.')
 
         flash('Updated Successfully')
+        return redirect(url_for('index'))
+
+
+@app.route('/rename', methods=['GET', 'POST'])
+def rename():
+    if request.method == 'POST':
+        id = request.form.get('user-id')
+        xname = request.form.get('user-xname')
+        name = request.form.get('user-name')
+
+        conn = mysql.connect()
+        cur = conn.cursor()
+        cur.execute(f""" UPDATE users
+                        SET name = '{name}'
+                        WHERE telegram_id = {id} """)
+        conn.commit()
+
+        flash(f'{xname} renamed to {name}')
         return redirect(url_for('index'))
