@@ -76,6 +76,5 @@ def rename():
                         SET name = '{name}'
                         WHERE telegram_id = {id} """)
         conn.commit()
-
         flash(f'{xname} renamed to {name}')
         return redirect(url_for('index'))
