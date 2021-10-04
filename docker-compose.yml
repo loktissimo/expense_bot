@@ -4,6 +4,7 @@ services:
  db:
   image: arm32v7/mariadb:10.6.2-focal
   restart: always
+  command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
   env_file:
    - ./env/db.env
   expose:
