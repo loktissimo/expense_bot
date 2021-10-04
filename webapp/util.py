@@ -11,5 +11,4 @@ def send_telegramm_message(id, text):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     data = {"text": text, "chat_id": id}
     result = requests.post(url, data)
-    # pprint(result.json())
     return result.json()
