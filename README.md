@@ -1,2 +1,3 @@
-# Аccounting of expenses
-MVP
+# Cost accounting bot
+
+Release!
