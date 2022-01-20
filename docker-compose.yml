@@ -1,27 +1,53 @@
-version: "3.9"
+version: "3"
+# version: "3.9"
 
 services:
- db:
-  image: arm32v7/mariadb:10.6.2-focal
-  restart: always
-  command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
-  env_file:
-   - ./env/db.env
-  expose:
-   - 3306
-  networks:
-   - app_network
-  volumes:
-   - ./mysql_dump:/docker-entrypoint-initdb.d
-   - ./mariadb_conf:/etc/mysql/conf.d
-   - db_data:/var/lib/mysql
-   - db_log:/var/log/mysql
-  container_name: db
+  db:
+    image: michaelkilian/arm32v7-mariadb-alpine
+    restart: always
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - app_network
+
+  web-app:
+    image: loktissimo/expense_web:latest
+    restart: always
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      WEB_USER: ${WEB_USER}
+      WEB_PASSWORD: ${WEB_PASSWORD}
+    ports:
+      - '5000:5000'
+    networks:
+      - app_network
+
+  bot:
+    image: loktissimo/expense_bot:latest
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      LOG_ID: ${LOG_ID}
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      # WEB_USER: ${WEB_USER}
+      # WEB_PASSWORD: ${WEB_PASSWORD}
+    networks:
+      - app_network
+
 
 networks:
  app_network:
-
-volumes:
- db_data:
- db_log:
- 
