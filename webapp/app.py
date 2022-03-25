@@ -41,7 +41,7 @@ update_id = f"""UPDATE expense
 send_report = f"SELECT telegram_id, text FROM expense WHERE id = {id}"
 
 rename_id = f"""UPDATE users
-                SET name = '{name}'
+                SET name = {name}
                 WHERE telegram_id = {id}"""
 
 
