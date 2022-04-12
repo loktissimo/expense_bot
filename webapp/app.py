@@ -34,15 +34,15 @@ front_page = """SELECT e.id, u.name, e.text, e.write_date, e.accept_date, e.acce
                  ON u.telegram_id = e.telegram_id
                  ORDER BY e.write_date DESC"""
 
-update_id = f"""UPDATE expense
-                SET accepted = 0, accept_date=now()
-                WHERE id = {id}"""
+update_id = f"UPDATE expense" \
+            f"SET accepted = 0, accept_date=now()" \
+            f"WHERE id = {id}"
 
 send_report = f"SELECT telegram_id, text FROM expense WHERE id = {id}"
 
-rename_id = f"""UPDATE users
-                SET name = {name}
-                WHERE telegram_id = {id}"""
+rename_id = f"UPDATE users" \
+            f"SET name = {name}" \
+            f"WHERE telegram_id = {id}"
 
 
 @app.route('/')
