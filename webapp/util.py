@@ -3,7 +3,7 @@ import os
 import requests
 
 
-load_dotenv('../.env')
+load_dotenv("../.env")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 
