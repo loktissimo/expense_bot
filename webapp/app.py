@@ -78,10 +78,10 @@ def rename():
     if request.method == "POST":
         id = request.form.get("user-id")
         xname = request.form.get("user-xname")
-        name = request.form.get("user-name")
+        nname = request.form.get("user-name")
 
         rename_id = f"""UPDATE users
-                        SET name = {name}
+                        SET name = {nname}
                         WHERE telegram_id = {id}"""
 
         conn = mysql.connect()
@@ -89,6 +89,6 @@ def rename():
         cur.execute(rename_id)
         conn.commit()
 
-        flash(f"{xname} renamed to {name}")
+        flash(f"{xname} renamed to {nname}")
 
         return redirect(url_for("index"))
