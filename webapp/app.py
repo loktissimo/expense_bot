@@ -81,7 +81,7 @@ def rename():
         nname = request.form.get("user-name")
 
         rename_id = f"""UPDATE users
-                        SET name = {nname}
+                        SET name = '{nname}'
                         WHERE telegram_id = {id}"""
 
         conn = mysql.connect()
