@@ -19,6 +19,9 @@ services:
 
   web-app:
     image: loktissimo/expense_web:latest
+    depends_on:
+      - db
+      - bot
     restart: always
     environment:
       DB_HOST: ${DB_HOST}
@@ -34,6 +37,8 @@ services:
 
   bot:
     image: loktissimo/expense_bot:latest
+    depends_on:
+      - db
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
       LOG_ID: ${LOG_ID}
@@ -43,7 +48,6 @@ services:
       DB_DATABASE: ${DB_DATABASE}
     networks:
       - app_network
-
 
 networks:
  app_network:
