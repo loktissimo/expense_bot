@@ -22,6 +22,6 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE `users` (
   `telegram_id` int(11) NOT NULL,
   `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tel` varchar(100) DEFAULT NULL,
+  `tel` varchar(12) NOT NULL DEFAULT "no number",
   PRIMARY KEY (`telegram_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
