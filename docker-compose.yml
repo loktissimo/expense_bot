@@ -24,6 +24,7 @@ services:
       - bot
     restart: always
     environment:
+      BOT_TOKEN: ${BOT_TOKEN}
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
