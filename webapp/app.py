@@ -56,14 +56,14 @@ def update(id):
 
         update_id = f"""UPDATE expense
                         SET accepted = 0, accept_date=now()
-                        WHERE id = {id}"""
+                        WHERE id = '{id}' """
 
         cur.execute(update_id)
         conn.commit()
 
         send_report = f"""SELECT telegram_id, text
                           FROM expense
-                          WHERE id = {id}"""
+                          WHERE id = '{id}' """
 
         cur.execute(send_report)
         id, text = cur.fetchone()
@@ -82,7 +82,7 @@ def rename():
 
         rename_id = f"""UPDATE users
                         SET name = '{nname}'
-                        WHERE telegram_id = {id}"""
+                        WHERE telegram_id = '{id}'"""
 
         conn = mysql.connect()
         cur = conn.cursor()
@@ -92,3 +92,8 @@ def rename():
         flash(f"{xname} renamed to {nname}")
 
         return redirect(url_for("index"))
+
+
+if __name__ == '__main__':
+  app.run(host='0.0.0.0', port=5050)
+
