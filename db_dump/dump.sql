@@ -1,7 +1,7 @@
-CREATE DATABASE expense_bot;
+-- SQL DUMP
+CREATE DATABASE IF NOT EXISTS expense_bot;
 USE expense_bot;
 
--- DROP TABLE IF EXISTS expense;
 CREATE TABLE `expense` (
   `id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `text` varchar(255) DEFAULT NULL,
@@ -11,7 +11,6 @@ CREATE TABLE `expense` (
   `accept_date` timestamp NULL DEFAULT NULL
 );
 
--- DROP TABLE IF EXISTS users;
 CREATE TABLE `users` (
   `telegram_id` bigint(10) PRIMARY KEY NOT NULL,
   `name` text NOT NULL,

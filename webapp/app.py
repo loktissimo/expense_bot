@@ -67,7 +67,7 @@ def update(id):
 
         cur.execute(send_report)
         id, text = cur.fetchone()
-        util.send_telegramm_message(id, f"{text}: \nВнёс в журнал.")
+        util.send_telegramm_message(id, f"{text}\n\nВнёс в журнал.")
 
         flash("Updated Successfully")
         return redirect(url_for("index"))
