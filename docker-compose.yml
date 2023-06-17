@@ -40,6 +40,7 @@ services:
     image: loktissimo/expense_bot:latest
     depends_on:
       - db
+    restart: always
     environment:
       BOT_TOKEN: ${BOT_TOKEN}
       LOG_ID: ${LOG_ID}
