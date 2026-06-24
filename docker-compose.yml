@@ -16,9 +16,7 @@ services:
       - app_network
 
   web-app:
-    build:
-      context: ./webapp
-    image: expense_web:local
+    image: loktissimo/expense_web:latest
     depends_on:
       - db
       - bot
