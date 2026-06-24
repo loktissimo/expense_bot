@@ -27,7 +27,3 @@ docker compose up -d
 ```
 
 Веб-интерфейс: `http://localhost:5000`.
-
-## CI/CD
-
-GitHub Actions собирает образы `loktissimo/expense_bot` и `loktissimo/expense_web` при пуше в `main`.
