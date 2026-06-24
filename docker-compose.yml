@@ -1,24 +1,24 @@
-version: "3.8"
-
 services:
   db:
-    image: michaelkilian/arm32v7-mariadb-alpine
+    image: mariadb:10.11
     restart: always
-    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
     ports:
-      - '3306:3306'
+      - "3306:3306"
     volumes:
       - ./db_dump:/docker-entrypoint-initdb.d
+      - ./db_data:/var/lib/mysql
     networks:
       - app_network
 
   web-app:
-    image: loktissimo/expense_web:latest
+    build:
+      context: ./webapp
+    image: expense_web:local
     depends_on:
       - db
       - bot
@@ -31,10 +31,12 @@ services:
       DB_DATABASE: ${DB_DATABASE}
       WEB_USER: ${WEB_USER}
       WEB_PASSWORD: ${WEB_PASSWORD}
+      ALL_PROXY: ${ALL_PROXY}
     ports:
-      - '5000:5000'
+      - "5000:5000"
     networks:
       - app_network
+      - caddy_proxy
 
   bot:
     image: loktissimo/expense_bot:latest
@@ -48,8 +50,11 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
+      ALL_PROXY: ${ALL_PROXY}
     networks:
       - app_network
 
 networks:
- app_network:
+  app_network:
+  caddy_proxy:
+    external: true
