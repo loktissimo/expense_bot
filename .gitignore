@@ -22,3 +22,4 @@ bot/__pycache__/*
 # Other
 db_data/
 db_dump/*.sql
+.git-credentials
