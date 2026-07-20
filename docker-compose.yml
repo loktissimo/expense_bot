@@ -2,14 +2,17 @@ services:
   db:
     image: mariadb:10.11
     restart: always
+    container_name: expense-db
     command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
     environment:
+      TZ: Europe/Moscow
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
     ports:
       - "3306:3306"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./db_dump:/docker-entrypoint-initdb.d
       - ./db_data:/var/lib/mysql
     networks:
@@ -21,7 +24,9 @@ services:
       - db
       - bot
     restart: always
+    container_name: expense-web
     environment:
+      TZ: Europe/Moscow
       BOT_TOKEN: ${BOT_TOKEN}
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}
@@ -32,6 +37,8 @@ services:
       ALL_PROXY: ${ALL_PROXY}
     ports:
       - "5000:5000"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - app_network
       - caddy_proxy
@@ -41,7 +48,9 @@ services:
     depends_on:
       - db
     restart: always
+    container_name: expense-bot
     environment:
+      TZ: Europe/Moscow
       BOT_TOKEN: ${BOT_TOKEN}
       LOG_ID: ${LOG_ID}
       DB_HOST: ${DB_HOST}
@@ -49,6 +58,8 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
       ALL_PROXY: ${ALL_PROXY}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - app_network
 
