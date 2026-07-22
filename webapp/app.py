@@ -48,7 +48,6 @@ def index():
 
 
 @app.route("/update/<id>", methods=["GET"])
-@basic_auth.required
 def update(id):
     if request.method == "GET":
         conn = mysql.connect()
