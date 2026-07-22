@@ -22,7 +22,6 @@ app.config["MYSQL_DATABASE_PASSWORD"] = os.environ.get("DB_PASSWORD")
 app.config["MYSQL_DATABASE_DB"] = os.environ.get("DB_DATABASE")
 app.config["BASIC_AUTH_USERNAME"] = os.environ.get("WEB_USER")
 app.config["BASIC_AUTH_PASSWORD"] = os.environ.get("WEB_PASSWORD")
-app.config["BASIC_AUTH_FORCE"] = True
 app.config["MYSQL_DATABASE_CHARSET"] = "utf8"
 
 mysql = MySQL(app)
@@ -49,6 +48,7 @@ def index():
 
 
 @app.route("/update/<id>", methods=["GET"])
+@basic_auth.required
 def update(id):
     if request.method == "GET":
         conn = mysql.connect()
@@ -74,6 +74,7 @@ def update(id):
 
 
 @app.route("/rename", methods=["GET", "POST"])
+@basic_auth.required
 def rename():
     if request.method == "POST":
         id = request.form.get("user-id")
